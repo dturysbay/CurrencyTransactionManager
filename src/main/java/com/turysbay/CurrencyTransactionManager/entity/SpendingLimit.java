@@ -1,7 +1,6 @@
 package com.turysbay.CurrencyTransactionManager.entity;
 
-import com.turysbay.CurrencyTransactionManager.enums.Category;
-import com.turysbay.CurrencyTransactionManager.enums.Currency;
+import com.turysbay.CurrencyTransactionManager.enums.*;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -21,9 +20,16 @@ public class SpendingLimit {
 
     private Date limitSetDate;
 
-    private BigDecimal limitUSD;
-    private BigDecimal availableMonthlyLimitUSD;
+    private BigDecimal limitAmount;
+    private BigDecimal availableMonthlyLimit;
+    private BigDecimal transactionAmount;
     private Boolean limitExceeded;
+
+    @Enumerated(EnumType.STRING)
+    private Currency limitCurrency;
+
+    @Enumerated(EnumType.STRING)
+    private Category category;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
