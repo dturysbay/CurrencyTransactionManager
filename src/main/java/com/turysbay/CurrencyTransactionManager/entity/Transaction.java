@@ -1,5 +1,6 @@
 package com.turysbay.CurrencyTransactionManager.entity;
 
+import com.turysbay.CurrencyTransactionManager.enums.Category;
 import com.turysbay.CurrencyTransactionManager.enums.Currency;
 import jakarta.persistence.*;
 import lombok.*;
@@ -26,6 +27,9 @@ public class Transaction {
 
     @Enumerated(EnumType.STRING)
     private Currency targetCurrency;
+
+    @Enumerated(EnumType.STRING)
+    private Category category;
 
     private Timestamp timeStamp;
 

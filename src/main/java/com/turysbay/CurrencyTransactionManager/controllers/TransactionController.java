@@ -15,7 +15,8 @@ public class TransactionController {
     private final TransactionServiceImpl transactionService;
 
     @PostMapping("/{userId}/makeTransaction")
-    public ResponseEntity<String> makeTransaction(@PathVariable Long userId, @RequestBody Transaction transactionRequest) {
+    public ResponseEntity<String> makeTransaction(@PathVariable Long userId,
+                                                  @RequestBody Transaction transactionRequest) {
         try {
             String status = transactionService.makeTransaction(userId, transactionRequest);
             return ResponseEntity.status(HttpStatus.CREATED).body("Transaction made successfully!");

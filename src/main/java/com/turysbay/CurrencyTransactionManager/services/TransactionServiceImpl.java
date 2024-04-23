@@ -5,7 +5,6 @@ import com.turysbay.CurrencyTransactionManager.entity.Transaction;
 import com.turysbay.CurrencyTransactionManager.entity.User;
 import com.turysbay.CurrencyTransactionManager.exceptions.UserNotFoundException;
 import com.turysbay.CurrencyTransactionManager.repositories.UserRepository;
-import jakarta.persistence.PrePersist;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import com.turysbay.CurrencyTransactionManager.repositories.TransactionRepository;
@@ -22,6 +21,7 @@ public class TransactionServiceImpl implements TransactionService {
     private final TransactionRepository transactionRepository;
     private final UserRepository userRepository;
     private final ExchangeRateServiceImpl exchangeRateService;
+    private final SpendingLimitServiceImpl spendingLimitService;
 
     @Override
     public String makeTransaction(Long userId, Transaction transactionRequest) {
@@ -43,6 +43,7 @@ public class TransactionServiceImpl implements TransactionService {
             transactionRequest.setExchangeRate(exchangeRate.getClose());
             transactionRequest.setTimeStamp(new Timestamp(System.currentTimeMillis()));
             transactionRepository.save(transactionRequest);
+            spendingLimitService.updateSpendingLimit(user,transactionRequest);
             return "Transaction successfully saved";
         } else {
             throw new UserNotFoundException("User with id " + userId + " not found");
