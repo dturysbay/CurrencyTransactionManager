@@ -2,10 +2,7 @@ package com.turysbay.CurrencyTransactionManager.entity;
 
 import com.turysbay.CurrencyTransactionManager.enums.Category;
 import com.turysbay.CurrencyTransactionManager.enums.Currency;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -14,17 +11,21 @@ import java.util.Date;
 
 @Entity
 @Data
-@Setter
-@Getter
 @NoArgsConstructor
-@AllArgsConstructor
+@Getter
+@Setter
 public class SpendingLimit {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
+
     private Date limitSetDate;
 
-    private Long limitUSD;
-    private Long availableMonthlyLimitUSD;
+    private BigDecimal limitUSD;
+    private BigDecimal availableMonthlyLimitUSD;
     private Boolean limitExceeded;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 }
