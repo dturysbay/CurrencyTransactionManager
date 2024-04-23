@@ -5,12 +5,11 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 
 @Entity
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
 public class Transaction {
@@ -18,11 +17,19 @@ public class Transaction {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    private BigDecimal amount;
-    private Currency currency;
-    private LocalDateTime timeStamp;
+    private BigDecimal baseAmount;
+    private BigDecimal targetAmount;
+    private Double exchangeRate;
 
-    @ManyToOne
+    @Enumerated(EnumType.STRING)
+    private Currency baseCurrency;
+
+    @Enumerated(EnumType.STRING)
+    private Currency targetCurrency;
+
+    private Timestamp timeStamp;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 }

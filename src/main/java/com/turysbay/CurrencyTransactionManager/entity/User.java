@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -20,9 +21,9 @@ public class User {
     private String username;
     private String email;
 
-    @OneToMany
-    private ArrayList<Transaction> transaction;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Transaction> transactions;
 
-    @OneToMany
-    private ArrayList<SpendingLimit> spendingLimit;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<SpendingLimit> spendingLimits;
 }
