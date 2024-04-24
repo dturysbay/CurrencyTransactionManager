@@ -3,8 +3,11 @@ package com.turysbay.CurrencyTransactionManager.controllers;
 import com.turysbay.CurrencyTransactionManager.entity.SpendingLimit;
 import com.turysbay.CurrencyTransactionManager.services.SpendingLimitServiceImpl;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/limits")
@@ -20,5 +23,10 @@ public class SpendingLimitController {
         }else{
             return ResponseEntity.badRequest().build();
         }
+    }
+
+    @GetMapping("/{id}")
+    private ResponseEntity<List<SpendingLimit>> getLimitsById(@PathVariable Long id){
+        return new ResponseEntity<>(spendingLimitService.getAllSpendingLimits(id), HttpStatus.OK);
     }
 }

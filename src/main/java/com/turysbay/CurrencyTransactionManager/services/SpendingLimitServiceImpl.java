@@ -25,8 +25,8 @@ public class SpendingLimitServiceImpl implements SpendingLimitService {
         return spendingLimitRepository.save(newSpendingLimit);
     }
 
-    public List<SpendingLimit> getAllSpendingLimits() {
-        return spendingLimitRepository.findAll();
+    public List<SpendingLimit> getAllSpendingLimits(Long id) {
+        return spendingLimitRepository.findByUserId(id);
     }
 
     public void initializeSpendingLimitsForUser(User user) {
